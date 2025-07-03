@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: tubechat-transcript-api
+    runtime: python
+    region: oregon
+    buildCommand: "pip install -r api/requirements.txt && pip install uvicorn[standard]"
+    startCommand: "uvicorn api.index:app --host 0.0.0.0 --port $PORT"
+    autoDeploy: true
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: "1" 

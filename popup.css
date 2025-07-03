@@ -1,0 +1,33 @@
+body {
+  font-family: Arial, sans-serif;
+  width: 300px;
+  margin: 0;
+  padding: 10px;
+}
+#chat-box {
+  height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 5px;
+  margin-bottom: 8px;
+  white-space: pre-line;
+}
+.message {
+  margin-bottom: 6px;
+}
+.message.user {
+  font-weight: bold;
+}
+.message.ai {
+  color: #333;
+}
+#chat-form {
+  display: flex;
+}
+#question-input {
+  flex: 1;
+  padding: 4px;
+}
+#chat-form button {
+  padding: 4px 8px;
+} 

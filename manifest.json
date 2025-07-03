@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube Transcript Chat",
+  "description": "Chat with any YouTube video using its transcript and Gemini AI.",
+  "version": "0.1.0",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://*.youtube.com/*",
+    "https://youtube.googleapis.com/*",
+    "https://www.googleapis.com/*",
+    "https://video.google.com/*",
+    "https://generativelanguage.googleapis.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.youtube.com/watch*"
+      ],
+      "js": ["contentScript.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "Chat with Video",
+    "default_popup": "popup.html"
+  }
+} 
