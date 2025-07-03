@@ -84,5 +84,7 @@ _(Executor update 2024-07-03j): Made Mangum import optional in `api/index.py`. R
 
 _(Executor update 2024-07-03k): `_build_client` now uses `WebshareProxyConfig` when available (yt-transcript-api>=1.1) for proper rotating proxies._
 
+_(Executor update 2024-07-03l): `webshare_transcript.py` now reads `WS_PROXY_USER` and `WS_PROXY_PASS` from environment; `render.yaml` now attaches envVarGroups [proxies]._
+
 # Lessons
 _(Record recurring fixes or learnings here.)_ 

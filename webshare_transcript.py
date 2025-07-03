@@ -1,6 +1,7 @@
 import random
 import sys
 import time
+import os
 from typing import List
 
 from youtube_transcript_api import YouTubeTranscriptApi
@@ -23,8 +24,8 @@ except ImportError:
 # -------------------------------
 # Webshare credential (provided by user)
 # -------------------------------
-_PROXY_USERNAME = "dchrpptt"
-_PROXY_PASSWORD = "3lug5urzog8f"
+_PROXY_USERNAME = os.getenv("WS_PROXY_USER", "")
+_PROXY_PASSWORD = os.getenv("WS_PROXY_PASS", "")
 
 # Pool of residential proxies (host, port)
 # These are rotated randomly for each request so we spread traffic and avoid IP blocks.
