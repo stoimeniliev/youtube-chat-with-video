@@ -86,5 +86,7 @@ _(Executor update 2024-07-03k): `_build_client` now uses `WebshareProxyConfig` w
 
 _(Executor update 2024-07-03l): `webshare_transcript.py` now reads `WS_PROXY_USER` and `WS_PROXY_PASS` from environment; `render.yaml` now attaches envVarGroups [proxies]._
 
+_(Executor update 2024-07-03m): Corrected `render.yaml` – link env group via `- fromGroup: proxies` inside `envVars` instead of invalid `envVarGroups` field.)
+
 # Lessons
 _(Record recurring fixes or learnings here.)_ 
