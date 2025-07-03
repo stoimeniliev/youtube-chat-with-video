@@ -78,5 +78,7 @@ _(Executor update 2024-07-03g): Configured `background.js` to use new Render bac
 
 _(Executor update 2024-07-03h): webshare_transcript.py now detects older youtube-transcript-api versions: if `.fetch` missing, falls back to `YouTubeTranscriptApi.get_transcript`. Should fix 500 error.)
 
+_(Executor update 2024-07-03i): Upgraded `youtube-transcript-api` to 1.1.0 in `api/requirements.txt` (adds proxy support and RequestBlocked). Removed explicit mangum pin.)
+
 # Lessons
 _(Record recurring fixes or learnings here.)_ 
