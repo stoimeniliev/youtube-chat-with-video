@@ -88,5 +88,7 @@ _(Executor update 2024-07-03l): `webshare_transcript.py` now reads `WS_PROXY_USE
 
 _(Executor update 2024-07-03m): Corrected `render.yaml` – link env group via `- fromGroup: proxies` inside `envVars` instead of invalid `envVarGroups` field.)
 
+_(Executor update 2024-07-03n): Expanded retry logic in `webshare_transcript.py` to retry on *any* `YouTubeRequestFailed`, not just 429. Should bypass country-block errors by rotating proxies.)
+
 # Lessons
 _(Record recurring fixes or learnings here.)_ 

@@ -122,20 +122,16 @@ def fetch_transcript_text(video_id: str, languages: List[str] | None = None) -> 
             # Success → return the concatenated text immediately.
             return "\n".join(snippet["text"] for snippet in fetched)
         except (YouTubeRequestFailed, RequestBlocked) as e:
-            # Only retry on 429 or when explicitly blocked.
-            if isinstance(e, RequestBlocked) or (
-                isinstance(e, YouTubeRequestFailed) and "429" in str(e)
-            ):
-                sleep_time = _BASE_DELAY_SEC * (2 ** (attempt - 1)) + random.uniform(0, 1)
-                print(
-                    f"[Warning] Attempt {attempt}/{_MAX_RETRIES} failed with {type(e).__name__}: {e}. "
-                    f"Rotating proxy and retrying in {sleep_time:.1f}s…",
-                    file=sys.stderr,
-                )
-                time.sleep(sleep_time)
-                continue
-            # All other exceptions are propagated immediately.
-            raise
+            # Retry on any RequestBlocked or YouTubeRequestFailed; many country-specific
+            # blocks manifest as generic 4xx codes, not just 429.
+            sleep_time = _BASE_DELAY_SEC * (2 ** (attempt - 1)) + random.uniform(0, 1)
+            print(
+                f"[Warning] Attempt {attempt}/{_MAX_RETRIES} failed with {type(e).__name__}: {e}. "
+                f"Rotating proxy and retrying in {sleep_time:.1f}s…",
+                file=sys.stderr,
+            )
+            time.sleep(sleep_time)
+            continue
 
     # If we reach here, all attempts failed.
     raise RuntimeError(
