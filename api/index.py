@@ -1,3 +1,6 @@
+
+
+
 from fastapi import FastAPI, HTTPException, Query
 # Mangum is used when running on AWS Lambda / Vercel but isn't required on Render
 try:
@@ -8,6 +11,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from webshare_transcript import fetch_transcript_text
 
 app = FastAPI(title="YouTube Transcript via Webshare Proxies")
+
+import os, logging
+logging.basicConfig(level=logging.INFO)
+logging.info("WS_PROXY_USER=%s", os.getenv("WS_PROXY_USER"))
 
 # Allow all origins (browser extensions are served from chrome-extension://)
 app.add_middleware(
