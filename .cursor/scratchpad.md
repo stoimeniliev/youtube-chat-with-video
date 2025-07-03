@@ -80,5 +80,7 @@ _(Executor update 2024-07-03h): webshare_transcript.py now detects older youtube
 
 _(Executor update 2024-07-03i): Upgraded `youtube-transcript-api` to 1.1.0 in `api/requirements.txt` (adds proxy support and RequestBlocked). Removed explicit mangum pin.)
 
+_(Executor update 2024-07-03j): Made Mangum import optional in `api/index.py`. Render deploy no longer requires `mangum` package.)
+
 # Lessons
 _(Record recurring fixes or learnings here.)_ 

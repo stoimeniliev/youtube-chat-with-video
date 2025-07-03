@@ -1,8 +1,9 @@
-
-
-
 from fastapi import FastAPI, HTTPException, Query
-from mangum import Mangum
+# Mangum is used when running on AWS Lambda / Vercel but isn't required on Render
+try:
+    from mangum import Mangum  # type: ignore
+except ImportError:
+    Mangum = None
 from fastapi.middleware.cors import CORSMiddleware
 from webshare_transcript import fetch_transcript_text
 
@@ -17,7 +18,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-handler = Mangum(app)  # Vercel detects this
+if Mangum is not None:
+    handler = Mangum(app)
 
 
 @app.get("/")
