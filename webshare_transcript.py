@@ -48,15 +48,33 @@ _BASE_DELAY_SEC = 1.0
 
 
 def _build_client() -> YouTubeTranscriptApi:
-    """Instantiate YouTubeTranscriptApi with a randomly-chosen Webshare proxy if available."""
-    if GenericProxyConfig is None:
-        # Fallback: no proxy support in the installed version – use default client.
-        return YouTubeTranscriptApi()
+    """Instantiate YouTubeTranscriptApi with Webshare rotating residential proxies (if supported).
 
-    host, port = random.choice(_PROXY_POOL)
-    proxy_url = f"http://{_PROXY_USERNAME}:{_PROXY_PASSWORD}@{host}:{port}"
-    proxy_cfg = GenericProxyConfig(proxy_url)
-    return YouTubeTranscriptApi(proxy_config=proxy_cfg)
+    For youtube-transcript-api>=1.1 we prefer WebshareProxyConfig which automatically rotates
+    through the residential pool. If that class isn't available we fall back to a random static
+    proxy from `_PROXY_POOL` via GenericProxyConfig. As a last resort (no proxy classes found)
+    we instantiate the client without proxies (may be blocked by YouTube)."""
+
+    # Prefer built-in Webshare helper when present
+    if WebshareProxyConfig is not None:
+        try:
+            cfg = WebshareProxyConfig(
+                proxy_username=_PROXY_USERNAME,
+                proxy_password=_PROXY_PASSWORD,
+            )
+            return YouTubeTranscriptApi(proxy_config=cfg)
+        except Exception:
+            # fall back below on any error
+            pass
+
+    # Older versions – roll our own rotation using GenericProxyConfig
+    if GenericProxyConfig is not None:
+        host, port = random.choice(_PROXY_POOL)
+        proxy_url = f"http://{_PROXY_USERNAME}:{_PROXY_PASSWORD}@{host}:{port}"
+        return YouTubeTranscriptApi(proxy_config=GenericProxyConfig(proxy_url))
+
+    # No proxy support – hope for the best
+    return YouTubeTranscriptApi()
 
 
 def fetch_transcript_text(video_id: str, languages: List[str] | None = None) -> str:

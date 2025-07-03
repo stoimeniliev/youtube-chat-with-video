@@ -82,5 +82,7 @@ _(Executor update 2024-07-03i): Upgraded `youtube-transcript-api` to 1.1.0 in `a
 
 _(Executor update 2024-07-03j): Made Mangum import optional in `api/index.py`. Render deploy no longer requires `mangum` package.)
 
+_(Executor update 2024-07-03k): `_build_client` now uses `WebshareProxyConfig` when available (yt-transcript-api>=1.1) for proper rotating proxies._
+
 # Lessons
 _(Record recurring fixes or learnings here.)_ 
