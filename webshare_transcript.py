@@ -4,7 +4,12 @@ import time
 from typing import List
 
 from youtube_transcript_api import YouTubeTranscriptApi
-from youtube_transcript_api.proxies import WebshareProxyConfig, GenericProxyConfig
+try:
+    from youtube_transcript_api.proxies import WebshareProxyConfig, GenericProxyConfig  # type: ignore
+except ImportError:
+    # Newer versions of youtube_transcript_api removed the proxies helper.
+    WebshareProxyConfig = None  # type: ignore
+    GenericProxyConfig = None  # type: ignore
 from youtube_transcript_api._errors import YouTubeRequestFailed, RequestBlocked
 
 # -------------------------------
@@ -35,9 +40,12 @@ _BASE_DELAY_SEC = 1.0
 
 
 def _build_client() -> YouTubeTranscriptApi:
-    """Instantiate YouTubeTranscriptApi with a randomly-chosen Webshare proxy."""
-    host, port = random.choice(_PROXY_POOL)
+    """Instantiate YouTubeTranscriptApi with a randomly-chosen Webshare proxy if available."""
+    if GenericProxyConfig is None:
+        # Fallback: no proxy support in the installed version – use default client.
+        return YouTubeTranscriptApi()
 
+    host, port = random.choice(_PROXY_POOL)
     proxy_url = f"http://{_PROXY_USERNAME}:{_PROXY_PASSWORD}@{host}:{port}"
     proxy_cfg = GenericProxyConfig(proxy_url)
     return YouTubeTranscriptApi(proxy_config=proxy_cfg)

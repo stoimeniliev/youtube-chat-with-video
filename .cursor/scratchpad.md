@@ -69,5 +69,7 @@ _(Executor update 2024-07-03c): Added direct timedtext scraping fallback in `bac
 
 _(Executor update 2024-07-03d): Added `render.yaml` and root `requirements.txt` (includes uvicorn) for Render deployment of FastAPI backend. After Render build completes, update `background.js` endpoint list with the new Render service URL.)
 
+_(Executor update 2024-07-03e): Patched `webshare_transcript.py` to gracefully skip proxy imports when `youtube_transcript_api.proxies` is absent. Render deploy should now succeed.)
+
 # Lessons
 _(Record recurring fixes or learnings here.)_ 
