@@ -93,7 +93,13 @@ def fetch_transcript_text(video_id: str, languages: List[str] | None = None) -> 
         attempt += 1
         client = _build_client()
         try:
-            fetched = client.fetch(video_id, languages=languages)
+            # youtube_transcript_api >=1.1 provides `.fetch()` on instance, whereas
+            # older versions expose `get_transcript()` (static/class method).
+            if hasattr(client, "fetch"):
+                fetched = client.fetch(video_id, languages=languages)
+            else:
+                # Fallback for versions <1.0 (e.g., 0.6.x)
+                fetched = YouTubeTranscriptApi.get_transcript(video_id, languages=languages)  # type: ignore
             # Success → return the concatenated text immediately.
             return "\n".join(snippet["text"] for snippet in fetched)
         except (YouTubeRequestFailed, RequestBlocked) as e:

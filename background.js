@@ -51,9 +51,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
  */
 async function fetchTranscript(videoId) {
   const endpoints = [
-    // Primary (our Vercel deployment – may 404 if Python runtime isn't enabled)
+    // Primary (Render deployment)
+    `https://tubechat-transcript-api.onrender.com/api/transcript?videoId=${videoId}`,
+    // Secondary (Vercel, may fail until Python runtime enabled)
     `https://tubechat-hfwb6ypks-stoimenilievs-projects.vercel.app/api/transcript?videoId=${videoId}`,
-    // Fallback to a public transcript service (youtube-transcriber-api)
+    // Public fallback service
     `https://youtube-transcriber-api.vercel.app/v1/transcripts?id=${videoId}&lang=en&type=text`
   ];
 

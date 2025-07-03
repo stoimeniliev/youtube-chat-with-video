@@ -73,5 +73,10 @@ _(Executor update 2024-07-03e): Patched `webshare_transcript.py` to gracefully s
 
 _(Executor update 2024-07-03f): Wrapped import of RequestBlocked in try/except and created fallback shim in `webshare_transcript.py` to support versions where it's missing._
 
+_(Executor update 2024-07-03g): Configured `background.js` to use new Render backend at `https://tubechat-transcript-api.onrender.com/api/transcript`. Added as primary endpoint.
+)_
+
+_(Executor update 2024-07-03h): webshare_transcript.py now detects older youtube-transcript-api versions: if `.fetch` missing, falls back to `YouTubeTranscriptApi.get_transcript`. Should fix 500 error.)
+
 # Lessons
 _(Record recurring fixes or learnings here.)_ 
