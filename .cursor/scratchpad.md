@@ -71,5 +71,7 @@ _(Executor update 2024-07-03d): Added `render.yaml` and root `requirements.txt` 
 
 _(Executor update 2024-07-03e): Patched `webshare_transcript.py` to gracefully skip proxy imports when `youtube_transcript_api.proxies` is absent. Render deploy should now succeed.)
 
+_(Executor update 2024-07-03f): Wrapped import of RequestBlocked in try/except and created fallback shim in `webshare_transcript.py` to support versions where it's missing._
+
 # Lessons
 _(Record recurring fixes or learnings here.)_ 

@@ -10,7 +10,15 @@ except ImportError:
     # Newer versions of youtube_transcript_api removed the proxies helper.
     WebshareProxyConfig = None  # type: ignore
     GenericProxyConfig = None  # type: ignore
-from youtube_transcript_api._errors import YouTubeRequestFailed, RequestBlocked
+try:
+    from youtube_transcript_api._errors import YouTubeRequestFailed, RequestBlocked
+except ImportError:
+    # Older/newer versions may rename or omit RequestBlocked. Provide a shim.
+    from youtube_transcript_api._errors import YouTubeRequestFailed  # type: ignore
+
+    class RequestBlocked(YouTubeRequestFailed):  # type: ignore
+        """Fallback placeholder when RequestBlocked is absent in library version."""
+        pass
 
 # -------------------------------
 # Webshare credential (provided by user)
